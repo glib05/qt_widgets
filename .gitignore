@@ -81,4 +81,4 @@ CMakeLists.txt.user*
 .uic/
 /build*/
 src/build/**
-db/**
+#db/**
