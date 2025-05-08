@@ -10,13 +10,23 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sqldatabaseloader.cpp \
+    sqlitedatabaseloader.cpp
 
 HEADERS += \
-    mainwindow.h
+    databaseloader.h \
+    databasestructures.h \
+    mainwindow.h \
+    sqldatabaseloader.h \
+    sqlitedatabaseloader.h
 
 FORMS += \
     mainwindow.ui
+
+QT += core sql
+CONFIG += console
+# CONFIG -= app_bundle
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
