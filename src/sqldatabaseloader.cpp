@@ -5,21 +5,31 @@
 // SQLDatabaseLoader::SQLDatabaseLoader() {}
 // inline SQLDatabaseLoader::~SQLDatabaseLoader() = default;
 
-void SQLDatabaseLoader::loadCountries(){
-    QSqlQuery query("SELECT mcc, code, name, mnc_length FROM countries");
+QVector<Country> SQLDatabaseLoader::loadCountries() {
+    QVector<Country> countries;
+
+    QSqlQuery query("SELECT mcc, code, name, mnc_length FROM countries", db);
     if (!query.exec()) {
-        qCritical() << "Помилка запиту:" << query.lastError().text();
-        return;
+        qCritical() << "Countries Table:" << query.lastError().text();
+        return countries;
     }
 
     while (query.next()) {
-        qDebug() << query.value(0).toInt() << query.value(1).toString()
-        << query.value(2).toString() << query.value(3).toInt();
+        Country c;
+        c.mcc = query.value(0).toInt();
+        c.code = query.value(1).toString();
+        c.name = query.value(2).toString();
+        c.mncLength = query.value(3).toInt();
+        countries.append(c);
     }
+
+    return countries;
 }
 
-void SQLDatabaseLoader::loadOperatorsForCountry(const QString &countryCode){
-    QSqlQuery query;
+QVector<Operator> SQLDatabaseLoader::loadOperatorsForCountry(const QString &countryCode) {
+    QVector<Operator> operators;
+
+    QSqlQuery query(db);
     query.prepare(R"(
         SELECT o.mcc, o.mnc, o.name
         FROM operators o
@@ -29,11 +39,17 @@ void SQLDatabaseLoader::loadOperatorsForCountry(const QString &countryCode){
     query.bindValue(":code", countryCode);
 
     if (!query.exec()) {
-        qCritical() << "Помилка запиту операторів:" << query.lastError().text();
-        return;
+        qCritical() << "Operators table:" << query.lastError().text();
+        return operators;
     }
 
     while (query.next()) {
-        qDebug() << query.value(0).toInt() << query.value(1).toInt() << query.value(2).toString();
+        Operator op;
+        op.mcc = query.value(0).toInt();
+        op.mnc = query.value(1).toInt();
+        op.name = query.value(2).toString();
+        operators.append(op);
     }
+
+    return operators;
 }
