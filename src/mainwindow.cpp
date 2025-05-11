@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "sqlitedatabaseloader.h"
+#include <QVBoxLayout>
 
 const QString DBPATH = "D:\\CVs\\Ozzylogik_test_task\\qt_widgets\\db\\OM system.db";
 
@@ -26,6 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::addRoot(const Country &countryData){
     QTreeWidgetItem *itm = new QTreeWidgetItem(ui->treeWidget);
     itm->setText(0, countryData.name+" ("+countryData.code+")");
+    itm->setIcon(0, QIcon("D:\\CVs\\Ozzylogik_test_task\\qt_widgets\\db\\Countries\\"+countryData.code+".png"));
     ui->treeWidget->addTopLevelItem(itm);
 
     const auto operatorsData = loader->loadOperatorsForCountry(countryData.code);
@@ -39,5 +41,8 @@ void MainWindow::addChild(QTreeWidgetItem *parent, const Operator &operatorData)
     itm->setText(0, operatorData.name + " (" +
                         QString::number(operatorData.mcc) + "-" +
                         QString::number(operatorData.mnc) + ")");
+    itm->setIcon(0, QIcon("D:\\CVs\\Ozzylogik_test_task\\qt_widgets\\db\\Operators\\"+
+                          QString::number(operatorData.mcc)+"_"+
+                          QString::number(operatorData.mnc)+".png"));
     parent->addChild(itm);
 }
