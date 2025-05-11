@@ -9,6 +9,7 @@ QVector<Country> SQLDatabaseLoader::loadCountries() {
     QVector<Country> countries;
 
     QSqlQuery query("SELECT DISTINCT name, code FROM countries ORDER BY name ASC", db);
+
     if (!query.exec()) {
         qCritical() << "Countries Table:" << query.lastError().text();
         return countries;
