@@ -1,12 +1,12 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <sqlitedatabaseloader.h>
+#include "sqlitedatabaseloaderfactory.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow w(new SQLiteDatabaseLoaderFactory());
     w.show();
     return a.exec();
 }

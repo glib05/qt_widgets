@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QTreeWidgetItem>
 #include "databaseloader.h"
+#include <QDir>
+#include "databaseloaderfactory.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,11 +22,12 @@ class MainWindow : public QMainWindow
     void addChild(QTreeWidgetItem *parent, const Operator &operatorData);
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(DatabaseLoaderFactory *loaderFactory, QWidget *parent = nullptr );
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
     DatabaseLoader *loader;
+    QDir dir;
 };
 #endif // MAINWINDOW_H
