@@ -8,7 +8,8 @@
 QVector<Country> SQLDatabaseLoader::loadCountries() {
     QVector<Country> countries;
 
-    QSqlQuery query("SELECT mcc, code, name, mnc_length FROM countries", db);
+    QSqlQuery query("SELECT DISTINCT name, code FROM countries ORDER BY name ASC", db);
+
     if (!query.exec()) {
         qCritical() << "Countries Table:" << query.lastError().text();
         return countries;
@@ -16,10 +17,8 @@ QVector<Country> SQLDatabaseLoader::loadCountries() {
 
     while (query.next()) {
         Country c;
-        c.mcc = query.value(0).toInt();
         c.code = query.value(1).toString();
-        c.name = query.value(2).toString();
-        c.mncLength = query.value(3).toInt();
+        c.name = query.value(0).toString();
         countries.append(c);
     }
 

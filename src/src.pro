@@ -11,15 +11,20 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    omdelegate.cpp \
     sqldatabaseloader.cpp \
-    sqlitedatabaseloader.cpp
+    sqlitedatabaseloader.cpp \
+    sqlitedatabaseloaderfactory.cpp
 
 HEADERS += \
     databaseloader.h \
+    databaseloaderfactory.h \
     databasestructures.h \
     mainwindow.h \
+    omdelegate.h \
     sqldatabaseloader.h \
-    sqlitedatabaseloader.h
+    sqlitedatabaseloader.h \
+    sqlitedatabaseloaderfactory.h
 
 FORMS += \
     mainwindow.ui
